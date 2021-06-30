@@ -68,7 +68,7 @@ class themeViewFinder extends FileViewFinder
 
         // Prepend current theme's view path to the remaped paths
         $newPaths = [];
-        $searchPaths = array_diff($this->paths, Theme::getLaravelViewPaths());
+        $searchPaths = $this->paths + Theme::getLaravelViewPaths();
         foreach ($searchPaths as $path1) {
             foreach ($themeSubPaths as $path2) {
                 $newPaths[] = $path1 . '/' . $path2;
