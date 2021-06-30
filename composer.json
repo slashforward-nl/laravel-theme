@@ -1,5 +1,5 @@
 {
-    "name": "igaster/laravel-theme",
+    "name": "slashforward-nl/laravel-theme",
     "description": "Laravel 5 Themes: Asset & Views folder per theme. Theme inheritance. Blade integration and more...",
     "keywords": ["themes", "views", "assets", "blade", "laravel", "package"],
     "license": "MIT",
