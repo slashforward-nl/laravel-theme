@@ -192,7 +192,7 @@ class Themes
                 // default theme settings
                 $defaults = [
                     'name'       => $themeName,
-                    'asset-path' => $themeName,
+                    'public-path' => $themeName,
                     'extends'    => null,
                 ];
 
@@ -245,7 +245,7 @@ class Themes
             // Create theme
             $theme = new Theme(
                 $data['name'],
-                $data['asset-path'],
+                $data['public-path'],
                 $data['views-path']
             );
 
@@ -275,8 +275,8 @@ class Themes
             }
 
             // Load Values from config/themes.php
-            if (isset($themeConfig['asset-path'])) {
-                $theme->assetPath = $themeConfig['asset-path'];
+            if (isset($themeConfig['public-path'])) {
+                $theme->publicPath = $themeConfig['public-path'];
             }
 
             if (isset($themeConfig['views-path'])) {

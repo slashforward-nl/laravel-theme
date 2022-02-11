@@ -1,6 +1,6 @@
 <?php namespace Igaster\LaravelTheme;
 
-class themeManifest
+class ThemeManifest
 {
 
     protected $data = [];

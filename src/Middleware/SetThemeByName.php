@@ -3,7 +3,7 @@
 use Closure;
 use Igaster\LaravelTheme\Facades\Theme;
 
-class setTheme
+class SetThemeByName
 {
     /**
      * Handle an incoming request.

@@ -5,7 +5,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\View\FileViewFinder;
 
-class themeViewFinder extends FileViewFinder
+class ThemeViewFinder extends FileViewFinder
 {
     public function __construct(Filesystem $files, array $paths, array $extensions = null)
     {

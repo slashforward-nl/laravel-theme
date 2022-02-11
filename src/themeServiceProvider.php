@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
-class themeServiceProvider extends ServiceProvider
+class ThemeServiceProvider extends ServiceProvider
 {
 
     public function register()
@@ -29,7 +29,7 @@ class themeServiceProvider extends ServiceProvider
         |--------------------------------------------------------------------------*/
 
         $this->app->singleton('view.finder', function ($app) {
-            return new \Igaster\LaravelTheme\themeViewFinder(
+            return new \Igaster\LaravelTheme\ThemeViewFinder(
                 $app['files'],
                 $app['config']['view.paths'],
                 null
@@ -40,7 +40,7 @@ class themeServiceProvider extends ServiceProvider
         | Register helpers.php functions
         |--------------------------------------------------------------------------*/
 
-        require_once 'Helpers/helpers.php';
+        require_once 'helpers.php';
 
     }
 

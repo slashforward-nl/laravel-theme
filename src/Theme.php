@@ -10,6 +10,7 @@ class Theme
     public $name;
     public $viewsPath;
     public $assetPath;
+    public $langPath;
     public $settings = [];
 
     /** @var Theme  */
@@ -18,13 +19,19 @@ class Theme
     /** @var \Igaster\LaravelTheme\Themes */
     private $themes;
 
-    public function __construct($themeName, $assetPath = null, $viewsPath = null, Theme $parent = null)
-    {
+    public function __construct(
+        $themeName, 
+        $publicPath = null, 
+        $viewsPath = null, 
+        $langPath = null, 
+        Theme $parent = null
+    ) {
         $this->themes = resolve('igaster.themes');
 
         $this->name = $themeName;
-        $this->assetPath = $assetPath === null ? $themeName : $assetPath;
-        $this->viewsPath = $viewsPath === null ? $themeName : $viewsPath;
+        $this->publicPath = $publicPath ?? $themeName;
+        $this->viewsPath = $viewsPath ?? $themeName;
+        $this->langPath = $viewsPath ?? $themeName;
         $this->parent = $parent;
 
         $this->themes->add($this);
@@ -47,6 +54,7 @@ class Theme
             }
 
         } while ($theme = $theme->parent);
+        
         return $paths;
     }
 
