@@ -3,11 +3,11 @@
     "description": "Laravel 5 Themes: Asset & Views folder per theme. Theme inheritance. Blade integration and more...",
     "keywords": ["themes", "views", "assets", "blade", "laravel", "package"],
     "license": "MIT",
-    "homepage": "https://github.com/Igaster/laravel-theme.git",
+    "homepage": "https://github.com/slashforward-nl/laravel-theme.git",
     "authors": [
         {
-            "name": "Giannis Gasteratos",
-            "email": "igasteratos@gmail.com"
+            "name": "Wouter Neuteboom",
+            "email": "w.neuteboom@slashforward.nl"
         }
     ],	
     "require": {
@@ -18,17 +18,17 @@
     },
     "autoload": {
         "psr-4" : {
-            "Igaster\\LaravelTheme\\"        : "src/",
-            "Igaster\\LaravelTheme\\Tests\\" : "tests/"            
+            "Slashforward\\LaravelTheme\\"        : "src/",
+            "Slashforward\\LaravelTheme\\Tests\\" : "tests/"            
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Igaster\\LaravelTheme\\themeServiceProvider"
+                "Slashforward\\LaravelTheme\\ThemeServiceProvider"
             ],
             "aliases": {
-                "Theme": "Igaster\\LaravelTheme\\Facades\\Theme"
+                "Theme": "Slashforward\\LaravelTheme\\Facades\\Theme"
             }
         }
     },
