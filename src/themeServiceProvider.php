@@ -1,32 +1,22 @@
 <?php namespace Igaster\LaravelTheme;
 
-use Igaster\LaravelTheme\Commands\createPackage;
-use Igaster\LaravelTheme\Commands\createTheme;
-use Igaster\LaravelTheme\Commands\installPackage;
-use Igaster\LaravelTheme\Commands\listThemes;
-use Igaster\LaravelTheme\Commands\refreshCache;
-use Igaster\LaravelTheme\Commands\removeTheme;
+use Igaster\LaravelTheme\Commands\CreateJsonTranslations;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class ThemeServiceProvider extends ServiceProvider
 {
-
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
     public function register()
     {
-
-        /*--------------------------------------------------------------------------
-        | Bind in IOC
-        |--------------------------------------------------------------------------*/
-
-        $this->app->singleton('igaster.themes', function () {
+        $this->app->singleton('slashforward.themes', function ($app) {
             return new Themes();
         });
-
-        /*--------------------------------------------------------------------------
-        | Replace FileViewFinder
-        |--------------------------------------------------------------------------*/
 
         $this->app->singleton('view.finder', function ($app) {
             return new \Igaster\LaravelTheme\ThemeViewFinder(
@@ -36,23 +26,37 @@ class ThemeServiceProvider extends ServiceProvider
             );
         });
 
-        /*--------------------------------------------------------------------------
-        | Register helpers.php functions
-        |--------------------------------------------------------------------------*/
+        $this->app->singleton('translation.loader', function ($app) {
+            return new \Igaster\LaravelTheme\Translation\ThemeFileLoader(
+                $app['files'], $app['path.lang']
+            );
+        });
+
+        $this->app->singleton('translator', function ($app) {
+            $loader = $app['translation.loader'];
+
+            // When registering the translator component, we'll need to set the default
+            // locale as well as the fallback locale. So, we'll grab the application
+            // configuration so we can easily get both of these values from there.
+            $locale = $app['config']['app.locale'];
+
+            $trans = new \Igaster\LaravelTheme\Translation\ThemeTranslator($loader, $locale);
+
+            $trans->setFallback($app['config']['app.fallback_locale']);
+
+            return $trans;
+        });
 
         require_once 'helpers.php';
-
     }
 
     public function boot()
     {
-
         /*--------------------------------------------------------------------------
         | Initialize Themes
         |--------------------------------------------------------------------------*/
-
-        $themes = $this->app->make('igaster.themes');
-        $themes->scanThemes();
+        $themes = app()->make('slashforward.themes');
+        $themes->scan();
 
         /*--------------------------------------------------------------------------
         | Activate default theme
@@ -64,7 +68,6 @@ class ThemeServiceProvider extends ServiceProvider
         /*--------------------------------------------------------------------------
         | Pulish configuration file
         |--------------------------------------------------------------------------*/
-
         $this->publishes([
             __DIR__ . '/Config/themes.php' => config_path('themes.php'),
         ], 'laravel-theme');
@@ -74,82 +77,24 @@ class ThemeServiceProvider extends ServiceProvider
         |--------------------------------------------------------------------------*/
         if ($this->app->runningInConsole()) {
             $this->commands([
-                listThemes::class,
-                createTheme::class,
-                removeTheme::class,
-                createPackage::class,
-                installPackage::class,
-                refreshCache::class,
+                CreateJsonTranslations::class,
+        //         createTheme::class,
+        //         removeTheme::class,
+        //         createPackage::class,
+        //         installPackage::class,
+        //         refreshCache::class,
             ]);
         }
 
-        /*--------------------------------------------------------------------------
-        | Register custom Blade Directives
-        |--------------------------------------------------------------------------*/
-
-        $this->registerBladeDirectives();
     }
 
-    protected function registerBladeDirectives()
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
     {
-        /*--------------------------------------------------------------------------
-        | Extend Blade to support Orcherstra\Asset (Asset Managment)
-        |
-        | Syntax:
-        |
-        |   @css (filename, alias, depends-on-alias)
-        |   @js  (filename, alias, depends-on-alias)
-        |--------------------------------------------------------------------------*/
-
-        Blade::extend(function ($value) {
-            return preg_replace_callback('/\@js\s*\(\s*([^),]*)(?:,\s*([^),]*))?(?:,\s*([^),]*))?\)/', function ($match) {
-
-                $p1 = trim($match[1], " \t\n\r\0\x0B\"'");
-                $p2 = trim(empty($match[2]) ? $p1 : $match[2], " \t\n\r\0\x0B\"'");
-                $p3 = trim(empty($match[3]) ? '' : $match[3], " \t\n\r\0\x0B\"'");
-
-                if (empty($p3)) {
-                    return "<?php Asset::script('$p2', theme_url('$p1'));?>";
-                } else {
-                    return "<?php Asset::script('$p2', theme_url('$p1'), '$p3');?>";
-                }
-
-            }, $value);
-        });
-
-        Blade::extend(function ($value) {
-            return preg_replace_callback('/\@jsIn\s*\(\s*([^),]*)(?:,\s*([^),]*))?(?:,\s*([^),]*))?(?:,\s*([^),]*))?\)/',
-                function ($match) {
-
-                    $p1 = trim($match[1], " \t\n\r\0\x0B\"'");
-                    $p2 = trim($match[2], " \t\n\r\0\x0B\"'");
-                    $p3 = trim(empty($match[3]) ? $p2 : $match[3], " \t\n\r\0\x0B\"'");
-                    $p4 = trim(empty($match[4]) ? '' : $match[4], " \t\n\r\0\x0B\"'");
-
-                    if (empty($p4)) {
-                        return "<?php Asset::container('$p1')->script('$p3', theme_url('$p2'));?>";
-                    } else {
-                        return "<?php Asset::container('$p1')->script('$p3', theme_url('$p2'), '$p4');?>";
-                    }
-
-                }, $value);
-        });
-
-        Blade::extend(function ($value) {
-            return preg_replace_callback('/\@css\s*\(\s*([^),]*)(?:,\s*([^),]*))?(?:,\s*([^),]*))?\)/', function ($match) {
-
-                $p1 = trim($match[1], " \t\n\r\0\x0B\"'");
-                $p2 = trim(empty($match[2]) ? $p1 : $match[2], " \t\n\r\0\x0B\"'");
-                $p3 = trim(empty($match[3]) ? '' : $match[3], " \t\n\r\0\x0B\"'");
-
-                if (empty($p3)) {
-                    return "<?php Asset::style('$p2', theme_url('$p1'));?>";
-                } else {
-                    return "<?php Asset::style('$p2', theme_url('$p1'), '$p3');?>";
-                }
-
-            }, $value);
-        });
+        return ['slashforward.themes'];
     }
-
 }

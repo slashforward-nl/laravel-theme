@@ -11,6 +11,6 @@ class Theme extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'igaster.themes';
+        return 'slashforward.themes';
     }
 }

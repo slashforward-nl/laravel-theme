@@ -33,21 +33,13 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
-	| Cache theme.json configuration files that are located in each theme's folder
-	| in order to avoid searching theme settings in the filesystem for each request
-	|--------------------------------------------------------------------------
-	*/
-
-	'cache' => false,
-
-	/*
-	|--------------------------------------------------------------------------
 	| Define available themes. Format:
 	|
 	| 	'theme-name' => [
 	| 		'extends'	 	=> 'theme-to-extend',  // optional
-	| 		'views-path' 	=> 'path-to-views',    // defaults to: resources/views/theme-name
-	| 		'asset-path' 	=> 'path-to-assets',   // defaults to: public/theme-name
+			'slug'			=> 'slug', 				// optional, defaults to: theme-name
+	| 		'views-path' 	=> 'path-to-views',    // defaults to: resources/views/slug
+	| 		'public-path' 	=> 'path-to-assets',   // defaults to: public/slug
 	|
 	|		// You can add your own custom keys
 	|		// Use Theme::getSetting('key') & Theme::setSetting('key', 'value') to access them
@@ -59,7 +51,7 @@ return [
 
 	'themes' => [
 
-                // Add your themes here. These settings will override theme.json settings defined for each theme
+		// Add your themes here. These settings will override theme.json settings defined for each theme
 
 		/*
 		|---------------------------[ Example Structure ]--------------------------
@@ -69,7 +61,7 @@ return [
 		|	'example1' => [
 		|		'extends'	 	=> null, 	// doesn't extend any theme
 		|		'views-path' 	=> example, // = resources/views/example_theme
-		|		'asset-path' 	=> example, // = public/example_theme
+		|		'public-path' 	=> example, // = public/example_theme,
 		|	],
 		|
 		|	// Use all Defaults:

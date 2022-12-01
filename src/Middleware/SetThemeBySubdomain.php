@@ -1,11 +1,9 @@
-<?php
-
-namespace App\Http\Middleware;
+<?php namespace Igaster\LaravelTheme\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 
-class SetThemeFromSubdomain
+class SetThemeBySubdomain
 {
     /**
      * Handle an incoming request.

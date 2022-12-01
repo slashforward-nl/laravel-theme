@@ -9,7 +9,7 @@ class ThemeViewFinder extends FileViewFinder
 {
     public function __construct(Filesystem $files, array $paths, array $extensions = null)
     {
-        $this->themeEngine = \App::make('igaster.themes');
+        // $this->themeEngine = app()->make('slashforward.themes');
         parent::__construct($files, $paths, $extensions);
     }
 
@@ -66,9 +66,12 @@ class ThemeViewFinder extends FileViewFinder
             }
         }
 
+        // dd($this->paths);
+
         // Prepend current theme's view path to the remaped paths
         $newPaths = [];
-        $searchPaths = $this->paths + Theme::getLaravelViewPaths();
+        // $searchPaths = $this->paths + Theme::getLaravelViewPaths();
+        $searchPaths = $this->paths + [];
         foreach ($searchPaths as $path1) {
             foreach ($themeSubPaths as $path2) {
                 $newPaths[] = $path1 . '/' . $path2;
@@ -99,7 +102,14 @@ class ThemeViewFinder extends FileViewFinder
         // Overide Error Pages
         if ($namespace == 'errors' || $namespace == 'mails') {
 
-            $searchPaths = array_diff($this->paths, Theme::getLaravelViewPaths());
+            $themeViewFinder = app('view.finder');
+
+            // dd($themeViewFinder);
+
+            // dd(Theme::getLaravelViewPaths());
+
+            // $searchPaths = array_diff($this->paths, Theme::getLaravelViewPaths());
+            $searchPaths = array_diff($this->paths, []);
 
             $addPaths = array_map(function ($path) use ($namespace) {
                 return "$path/$namespace";
@@ -114,18 +124,11 @@ class ThemeViewFinder extends FileViewFinder
      *
      * @param  array  $paths
      */
-    public function setPaths($paths)
-    {
-        $this->paths = $paths;
-        $this->flush();
-    }
+    // public function setPaths($paths)
+    // {
+    //     $this->paths = $paths;
+    //     $this->flush();
+    // }
 
-    /**
-     * Get the array of paths wherew the views are being searched.
-     */
-    public function getPaths()
-    {
-        return $this->paths;
-    }
 
 }

@@ -1,11 +1,9 @@
-<?php
-
-namespace App\Http\Middleware;
+<?php namespace Igaster\LaravelTheme\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 
-class SetThemeFromDomain
+class SetThemeByDomain
 {
     /**
      * Handle an incoming request.
@@ -17,14 +15,8 @@ class SetThemeFromDomain
     public function handle(Request $request, Closure $next)
     {
         if(\Theme::exists($request->getHost())) {
-            \Helper::setTheme($request->getHost());
-
-            \SEOMeta::setTitleDefault(\Theme::getSetting('title'));
+            \Theme::set($request->getHost());
         }
-
-        // Register broadcasting
-        // app()->register(\Illuminate\Broadcasting\BroadcastServiceProvider::class);
-        // app()->register(\App\Providers\BroadcastServiceProvider::class);
 
         return $next($request);
     }
