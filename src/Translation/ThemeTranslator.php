@@ -1,9 +1,9 @@
 <?php
 
-namespace Igaster\LaravelTheme\Translation;
+namespace Slashforward\LaravelTheme\Translation;
 
 use Illuminate\Translation\Translator;
-use Igaster\LaravelTheme\Theme;
+use Slashforward\LaravelTheme\Theme;
 
 class ThemeTranslator extends Translator
 {

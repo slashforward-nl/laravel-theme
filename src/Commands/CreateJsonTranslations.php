@@ -1,6 +1,6 @@
 <?php 
 
-namespace Igaster\LaravelTheme\Commands;
+namespace Slashforward\LaravelTheme\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;

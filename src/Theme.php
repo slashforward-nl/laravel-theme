@@ -1,4 +1,4 @@
-<?php namespace Igaster\LaravelTheme;
+<?php namespace Slashforward\LaravelTheme;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;

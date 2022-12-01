@@ -1,6 +1,6 @@
-<?php namespace Igaster\LaravelTheme;
+<?php namespace Slashforward\LaravelTheme;
 
-use Igaster\LaravelTheme\Facades\Theme;
+use Slashforward\LaravelTheme\Facades\Theme;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\View\FileViewFinder;

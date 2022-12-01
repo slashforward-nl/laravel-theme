@@ -1,4 +1,4 @@
-<?php namespace Igaster\LaravelTheme;
+<?php namespace Slashforward\LaravelTheme;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Env;
@@ -87,7 +87,7 @@ class Themes
         app()->useLangPath($langPath);
 
         // Dispatch event so user can hook in and trigger actions
-        Event::dispatch('igaster.laravel-theme.change', $theme);
+        Event::dispatch('Slashforward.laravel-theme.change', $theme);
 
         return $theme;
     }

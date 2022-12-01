@@ -1,6 +1,6 @@
-<?php namespace Igaster\LaravelTheme\Translation;
+<?php namespace Slashforward\LaravelTheme\Translation;
 
-use Igaster\LaravelTheme\Facades\Theme;
+use Slashforward\LaravelTheme\Facades\Theme;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Translation\FileLoader;

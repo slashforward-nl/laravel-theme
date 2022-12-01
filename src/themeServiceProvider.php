@@ -1,6 +1,6 @@
-<?php namespace Igaster\LaravelTheme;
+<?php namespace Slashforward\LaravelTheme;
 
-use Igaster\LaravelTheme\Commands\CreateJsonTranslations;
+use Slashforward\LaravelTheme\Commands\CreateJsonTranslations;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
@@ -19,7 +19,7 @@ class ThemeServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('view.finder', function ($app) {
-            return new \Igaster\LaravelTheme\ThemeViewFinder(
+            return new \Slashforward\LaravelTheme\ThemeViewFinder(
                 $app['files'],
                 $app['config']['view.paths'],
                 null
@@ -27,7 +27,7 @@ class ThemeServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('translation.loader', function ($app) {
-            return new \Igaster\LaravelTheme\Translation\ThemeFileLoader(
+            return new \Slashforward\LaravelTheme\Translation\ThemeFileLoader(
                 $app['files'], $app['path.lang']
             );
         });
@@ -40,7 +40,7 @@ class ThemeServiceProvider extends ServiceProvider
             // configuration so we can easily get both of these values from there.
             $locale = $app['config']['app.locale'];
 
-            $trans = new \Igaster\LaravelTheme\Translation\ThemeTranslator($loader, $locale);
+            $trans = new \Slashforward\LaravelTheme\Translation\ThemeTranslator($loader, $locale);
 
             $trans->setFallback($app['config']['app.fallback_locale']);
 

@@ -1,4 +1,4 @@
-<?php namespace Igaster\LaravelTheme\Middleware;
+<?php namespace Slashforward\LaravelTheme\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;

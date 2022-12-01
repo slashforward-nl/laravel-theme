@@ -1,4 +1,4 @@
-<?php namespace Igaster\LaravelTheme\Exceptions;
+<?php namespace Slashforward\LaravelTheme\Exceptions;
 
 class ThemeNotFound extends \Exception{
 
