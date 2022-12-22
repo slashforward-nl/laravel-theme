@@ -26,8 +26,13 @@ class Theme
         return $this->name;
     }
 
-    public function getSlug() {
-        return($this->slug ?? $this->name);
+    public function getSlug()
+    {
+        if($this->parent && is_null($this->slug)) {
+            return $this->parent->getSlug();
+        }
+
+        return ($this->slug ?? $this->name);
     }
 
     public function getPublicPath() {
